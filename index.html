@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Портфолио — Владислав Алексеев</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Одностраничное резюме-портфолио Владислава Алексеева, инженера по информационной безопасности" />
+    <meta name="description" content="Одностраничное резюме-портфолио Владислава Алексеева, старшего инженера по информационной безопасности" />
     <style>
         /* ---------- БАЗА ---------- */
         *, *::before, *::after {
@@ -115,9 +115,9 @@
         }
 
         .nav-links {
+            flex: 1;
             display: flex;
-            gap: 0.5rem;
-            align-items: center;
+            justify-content: center;
         }
 
         .nav-link {
@@ -146,7 +146,7 @@
         .nav-cta {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.6rem;
             padding: 0.45rem 0.95rem;
             border-radius: var(--radius-pill);
             border: 1px solid rgba(148, 163, 184, 0.6);
@@ -191,7 +191,7 @@
 
         .hero-inner {
             display: grid;
-            grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+            grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.2fr);
             gap: 3rem;
             align-items: center;
         }
@@ -226,7 +226,7 @@
             margin-bottom: 0.75rem;
         }
 
-        .hero-title span {
+        .hero-title .hero-accent {
             background: linear-gradient(120deg, #a5b4fc, #38bdf8, #4ade80);
             -webkit-background-clip: text;
             color: transparent;
@@ -451,19 +451,20 @@
         .hero-card-pill {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            padding: 0.18rem 0.7rem;
+            gap: 0.6rem;
+            padding: 0.26rem 0.85rem;
             border-radius: 999px;
             border: 1px solid rgba(148, 163, 184, 0.6);
             background: rgba(15, 23, 42, 0.95);
         }
 
         .hero-card-status-dot {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-radius: 999px;
             background: #22c55e;
-            box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.22);
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.22);
+            flex-shrink: 0;
         }
 
         .hero-card-links {
@@ -533,21 +534,25 @@
         .section-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
-            gap: 1rem;
+            align-items: center;          /* центрируем текст вертикально, а не вниз */
+            gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
         .section-title {
             font-size: 1.45rem;
             font-weight: 650;
+            flex-shrink: 0;               /* не даём заголовку сжиматься */
         }
 
         .section-subtitle {
             font-size: 0.9rem;
             color: var(--muted);
-            max-width: 20rem;
+            max-width: 25rem;             /* делаем шире, чтобы красиво разбивалось */
             text-align: right;
+            line-height: 1.35;            /* компактнее, не так громоздко */
+            white-space: normal;          /* разрешаем перенос */
+            word-break: break-word;       /* перенос длинных слов, если нужно */
         }
 
         /* Анимация появления секций */
@@ -916,7 +921,10 @@
         /* ---------- CONTACT ---------- */
         .contact-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
+            grid-template-columns: minmax(0, 1fr);
+            justify-items: stretch;
+            max-width: 720px;
+            margin: 0 auto;
             gap: 1.75rem;
             align-items: flex-start;
         }
@@ -945,6 +953,8 @@
         .contact-highlight-list {
             font-size: 0.85rem;
             color: var(--muted);
+            padding-left: 1.4rem; /* Было 0, теперь больше воздуха */
+            list-style-position: outside;
         }
 
         .contact-highlight-list li + li {
@@ -967,6 +977,7 @@
             background: rgba(15, 23, 42, 0.95);
         }
 
+        /* ---------- FORM-RELATED (не используется сейчас, можно удалить при желании) ---------- */
         .contact-form-card {
             border-radius: var(--radius-lg);
             background: radial-gradient(circle at top, rgba(15, 23, 42, 1), rgba(2, 6, 23, 1));
@@ -1064,6 +1075,52 @@
 
         .footer-link:hover {
             color: #e5e7ff;
+        }
+
+        /* ---------- FLOATING TELEGRAM CTA ---------- */
+        .floating-cta {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            z-index: 55;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.7rem 1.3rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: radial-gradient(circle at top left, #818cf8, #4f46e5);
+            color: #e5e7ff;
+            box-shadow: 0 20px 48px rgba(55, 48, 163, 0.9);
+            border: 1px solid rgba(191, 219, 254, 0.85);
+            cursor: pointer;
+            text-decoration: none;
+
+            opacity: 0;
+            transform: translateY(8px) scale(0.98);
+            pointer-events: none;
+            transition:
+                opacity 0.25s ease-out,
+                transform 0.25s ease-out,
+                box-shadow 0.25s ease-out,
+                background 0.25s ease-out;
+        }
+
+        .floating-cta.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .floating-cta:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 26px 60px rgba(55, 48, 163, 1);
+        }
+
+        .floating-cta-icon {
+            font-size: 0.95rem;
+            transform: translateY(1px);
         }
 
         /* ---------- RESPONSIVE ---------- */
@@ -1169,6 +1226,13 @@
             .contact-grid {
                 gap: 1.25rem;
             }
+
+            .floating-cta {
+                right: 1rem;
+                bottom: 1rem;
+                padding: 0.6rem 1.05rem;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -1179,11 +1243,8 @@
             <div class="container">
                 <nav class="nav">
                     <div class="nav-left">
-                        <div class="logo-circle">АВ</div>
-                        <div>
-                            <div class="logo-text-main">Владислав Алексеев</div>
-                            <div class="logo-text-sub">Инженер по информационной безопасности</div>
-                        </div>
+                        <!--<div class="logo-circle">АВ</div>-->
+                        <div class="logo-text-main">Владислав Алексеев</div>
                     </div>
                     <button class="mobile-toggle" aria-label="Открыть меню">
                         ☰
@@ -1198,10 +1259,10 @@
                         <button class="nav-link" data-target="certificates">Сертификаты</button>
                         <button class="nav-link" data-target="contact">Контакты</button>
                     </div>
-                    <button class="nav-cta" data-target="contact">
+                    <a class="nav-cta" href="https://t.me/Alekseev_01" target="_blank" rel="noreferrer">
                         <span class="nav-cta-dot"></span>
-                        Связаться
-                    </button>
+                        Написать
+                    </a>
                 </nav>
             </div>
         </header>
@@ -1214,10 +1275,12 @@
                         <div>
                             <div class="hero-tag">
                                 <span class="hero-tag-pill">Открыт к предложениям в ИБ</span>
-                                <span>Инженер по информационной безопасности, Москва</span>
+                                <span>Старший инженер по информационной безопасности, Москва</span>
                             </div>
                             <h1 class="hero-title">
-                                Привет, я <span>Владислав</span> — инженер по информационной безопасности.
+                                Привет, я <span class="hero-accent">Владислав</span> — <span data-role="position-lower">
+                                    старший инженер по информационной безопасности
+                                </span>.
                             </h1>
                             <p class="hero-subtitle">
                                 Занимаюсь внедрением и администрированием средств защиты, виртуализацией
@@ -1256,7 +1319,9 @@
                                     <img src="avatar.jpg" alt="Фотография Владислава Алексеева" class="hero-avatar-img" />
                                 </div>
                                 <div class="hero-card-name">Владислав Алексеев</div>
-                                <div class="hero-card-role">Старший инженер по информационной безопасности</div>
+                                <div class="hero-card-role" data-role="position-cap">
+                                    Старший инженер по информационной безопасности
+                                </div>
                                 <div class="hero-card-age">
                                     Дата рождения: 15 августа 2001 · <span id="age-span"></span>
                                 </div>
@@ -1296,7 +1361,7 @@
                     <div class="about-grid section-content">
                         <div class="about-text">
                             <p>
-                                Я инженер по информационной безопасности с опытом работы в проектной и эксплуатационной деятельности.
+                                Я старший инженер по информационной безопасности с опытом работы в проектной и эксплуатационной деятельности.
                                 Начинал стажёром в компании «Юстас», последовательно вырос до старшего инженера и участвовал во
                                 внедрении комплексных решений ИБ для госзаказчиков и промышленных компаний.
                             </p>
@@ -1594,7 +1659,7 @@
                             <h3 class="cert-title">Виртуализация и ИБ: отечественные платформы</h3>
                             <div class="cert-provider">РЕД СОФТ / VeiL / Astra · обучение</div>
                             <div class="cert-meta">
-                                Настройка стендов и инфраструктуры на базе РЕД Виртуализация, VeiL, ПК СВ «Брест» и SpaceVM с учётом
+                                Ведение пилотных проектов и инфраструктуры на базе РЕД Виртуализация, VeiL, ПК СВ «Брест» и SpaceVM с учётом
                                 требований безопасности и особенностей эксплуатации в госcекторе.
                             </div>
                             <div class="cert-tags">
@@ -1616,12 +1681,14 @@
                             Свяжитесь со мной, если хотите обсудить проект, позицию в ИБ или сотрудничество.
                         </p>
                     </header>
+
                     <div class="contact-grid section-content">
                         <aside class="contact-highlight-card">
                             <div class="contact-highlight-title">Как со мной связаться</div>
                             <div class="contact-highlight-sub">
-                                Предпочитаю асинхронную коммуникацию: email или Telegram. Обычно отвечаю в течение рабочего дня.
+                                Предпочитаю асинхронную коммуникацию: email или Telegram. Отвечаю в течение рабочего дня.
                             </div>
+
                             <ul class="contact-highlight-list">
                                 <li><strong>Телефон:</strong> +7&nbsp;922&nbsp;549-18-27</li>
                                 <li><strong>Email:</strong> <a href="mailto:v.alekseev01@mail.ru">v.alekseev01@mail.ru</a></li>
@@ -1629,44 +1696,13 @@
                                 <li><strong>GitHub:</strong> <a href="https://github.com/Alekseev01" target="_blank" rel="noreferrer">github.com/Alekseev01</a></li>
                                 <li><strong>Город:</strong> Москва, м. Рассказовка</li>
                             </ul>
+
                             <div class="contact-badges">
                                 <span class="contact-badge">Информационная безопасность</span>
                                 <span class="contact-badge">Полный день / гибкий график</span>
                                 <span class="contact-badge">Remote / офис · редкие командировки</span>
                             </div>
                         </aside>
-                        <div class="contact-form-card">
-                            <!-- Форма пока "бутафорская" — можно подвязать к бэку или сервису отправки -->
-                            <form onsubmit="handleFakeSubmit(event)">
-                                <div class="form-row">
-                                    <div class="field">
-                                        <label for="name">Имя</label>
-                                        <input id="name" name="name" type="text" placeholder="Как к вам обращаться" />
-                                    </div>
-                                    <div class="field">
-                                        <label for="email">Email</label>
-                                        <input id="email" name="email" type="email" placeholder="Ваш email для ответа" />
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label for="topic">Тема</label>
-                                    <input id="topic" name="topic" type="text" placeholder="Проект, вакансия или сотрудничество" />
-                                </div>
-                                <div class="field">
-                                    <label for="message">Сообщение</label>
-                                    <textarea id="message" name="message" rows="4" placeholder="Кратко опишите задачу или запрос"></textarea>
-                                </div>
-                                <div class="form-footer">
-                                    <div class="form-note">
-                                        Отправка формы сейчас никуда не уходит — можно подключить бэкенд или сервис (Formspree, Getform и т.п.).
-                                    </div>
-                                    <button class="btn btn-primary" type="submit">
-                                        Отправить сообщение
-                                        <span class="btn-icon">↗</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -1692,6 +1728,15 @@
                 <img src="avatar.jpg" alt="Фотография Владислава Алексеева крупным планом" />
             </div>
         </div>
+
+        <!-- FLOATING TELEGRAM CTA -->
+        <a href="https://t.me/Alekseev_01"
+           class="floating-cta"
+           target="_blank"
+           rel="noreferrer">
+            Написать в Telegram
+            <span class="floating-cta-icon">↗</span>
+        </a>
     </div>
 
     <script>
@@ -1774,12 +1819,6 @@
             observer.observe(section);
         });
 
-        // "Фейковая" отправка формы
-        function handleFakeSubmit(e) {
-            e.preventDefault();
-            alert("Здесь можно подключить отправку формы на сервер или через внешний сервис.");
-        }
-
         // Расчёт текущего возраста по дате рождения
         (function calcAge() {
             const ageSpan = document.getElementById("age-span");
@@ -1806,6 +1845,26 @@
             ageSpan.textContent = formatAgeRu(age);
         })();
 
+        // Единый источник правды для должности
+        (function initPositionTitle() {
+            const POSITION = "старший инженер по информационной безопасности";
+
+            function capitalizeFirst(str) {
+                if (!str) return str;
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+
+            // Вариант с маленькой буквы
+            document.querySelectorAll('[data-role="position-lower"]').forEach((el) => {
+                el.textContent = POSITION;
+            });
+
+            // Вариант с заглавной буквы
+            document.querySelectorAll('[data-role="position-cap"]').forEach((el) => {
+                el.textContent = capitalizeFirst(POSITION);
+            });
+        })();
+
         // Фуллскрин-модал с фотографией
         (function initAvatarModal() {
             const trigger = document.getElementById("avatar-trigger");
@@ -1823,6 +1882,35 @@
                     close();
                 }
             });
+        })();
+
+        // Появление плавающей Telegram-кнопки после ~40% скролла
+        (function initFloatingCtaVisibility() {
+            const cta = document.querySelector(".floating-cta");
+            if (!cta) return;
+
+            function updateVisibility() {
+                const scrollY = window.scrollY || window.pageYOffset;
+                const docHeight =
+                    document.documentElement.scrollHeight - window.innerHeight;
+
+                if (docHeight <= 0) {
+                    // страница короткая — просто показываем кнопку
+                    cta.classList.add("visible");
+                    return;
+                }
+
+                const progress = scrollY / docHeight; // от 0 до 1
+
+                if (progress >= 0.4) {
+                    cta.classList.add("visible");
+                } else {
+                    cta.classList.remove("visible");
+                }
+            }
+
+            window.addEventListener("scroll", updateVisibility);
+            window.addEventListener("load", updateVisibility);
         })();
     </script>
 </body>
